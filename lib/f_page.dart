@@ -7,9 +7,29 @@ class FPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: HomeRepository().fetchNumber(),
-        builder: (context, snapshot) => Text("넘버 : ${snapshot.data}"),
+      appBar: AppBar(title: Text("FPage")),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.yellow,
+            height: 300,
+          ),
+          FutureBuilder(
+            future: HomeRepository().fetchNumber(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Center(
+                  child: Text(
+                    "${snapshot.data}",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ],
       ),
     );
   }
